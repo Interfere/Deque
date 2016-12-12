@@ -52,7 +52,7 @@ public struct Deque<Element>: RandomAccessCollection, MutableCollection {
     ///
     ///     let numbers = Deque(1...7)
     ///     print(numbers)
-    ///     // Prints "[:| 1, 2, 3, 4, 5, 6, 7 |:]"
+    ///     // Prints "[1, 2, 3, 4, 5, 6, 7]"
     ///
     ///
     /// - Parameter s: The sequence of elements to turn into deque.
@@ -69,7 +69,7 @@ public struct Deque<Element>: RandomAccessCollection, MutableCollection {
     ///
     ///     let fiveZs = Deque(repeating: "Z", count: 5)
     ///     print(fiveZs)
-    ///     // Prints "[:| "Z", "Z", "Z", "Z", "Z" |:]"
+    ///     // Prints "["Z", "Z", "Z", "Z", "Z"]"
     ///
     /// - Parameters:
     ///   - repeatedValue: The element to repeat.
@@ -147,7 +147,7 @@ public struct Deque<Element>: RandomAccessCollection, MutableCollection {
     ///     var numbers = Deque([1, 2, 3, 4, 5])
     ///     numbers.append(100)
     ///     print(numbers)
-    ///     // Prints "[:| 1, 2, 3, 4, 5, 100 |:]"
+    ///     // Prints "[1, 2, 3, 4, 5, 100]"
     ///
     /// Because deques increase their allocated capacity using an exponential
     /// strategy, appending a single element to an deque is an O(1) operation
@@ -175,7 +175,7 @@ public struct Deque<Element>: RandomAccessCollection, MutableCollection {
     ///     var numbers = Deque([1, 2, 3, 4, 5])
     ///     numbers.append(contentsOf: 10...15)
     ///     print(numbers)
-    ///     // Prints "[:| 1, 2, 3, 4, 5, 10, 11, 12, 13, 14, 15 |:]"
+    ///     // Prints "[1, 2, 3, 4, 5, 10, 11, 12, 13, 14, 15]"
     ///
     /// - Parameter newElements: The elements to append to the deque.
     ///
@@ -197,7 +197,7 @@ public struct Deque<Element>: RandomAccessCollection, MutableCollection {
     ///     var numbers = Deque([1, 2, 3, 4, 5])
     ///     numbers.append(contentsOf: 10...15)
     ///     print(numbers)
-    ///     // Prints "[:| 1, 2, 3, 4, 5, 10, 11, 12, 13, 14, 15 |:]"
+    ///     // Prints "[1, 2, 3, 4, 5, 10, 11, 12, 13, 14, 15]"
     ///
     /// - Parameter newElements: The elements to append to the deque.
     ///
@@ -213,7 +213,7 @@ public struct Deque<Element>: RandomAccessCollection, MutableCollection {
     ///     var numbers = Deque([1, 2, 3, 4, 5])
     ///     numbers.prepend(100)
     ///     print(numbers)
-    ///     // Prints "[:| 100, 1, 2, 3, 4, 5 |:]"
+    ///     // Prints "[100, 1, 2, 3, 4, 5]"
     ///
     /// Because deques increase their allocated capacity using an exponential
     /// strategy, prepending a single element to deque is an O(1) operation
@@ -244,7 +244,7 @@ public struct Deque<Element>: RandomAccessCollection, MutableCollection {
     ///     numbers.insert(300, at: numbers.startIndex)
     ///
     ///     print(numbers)
-    ///     // Prints "[:| 300, 1, 2, 3, 100, 4, 5, 200 |:]"
+    ///     // Prints "[300, 1, 2, 3, 100, 4, 5, 200]"
     ///
     /// - Parameter newElement: The new element to insert into the deque.
     /// - Parameter i: The position at which to insert the new element.
@@ -262,10 +262,10 @@ public struct Deque<Element>: RandomAccessCollection, MutableCollection {
     /// All the elements following the specified position are moved up to
     /// close the gap.
     ///
-    ///     var measurements: Deque<Double> = Deque([1.1, 1.5, 2.9, 1.2, 1.5, 1.3, 1.2])
+    ///     var measurements: Deque<Double> = [1.1, 1.5, 2.9, 1.2, 1.5, 1.3, 1.2]
     ///     let removed = measurements.remove(at: 2)
     ///     print(measurements)
-    ///     // Prints "[:| 1.1, 1.5, 1.2, 1.5, 1.3, 1.2 |:]"
+    ///     // Prints "[1.1, 1.5, 1.2, 1.5, 1.3, 1.2]"
     ///
     /// - Parameter index: The position of the element to remove. `index` must
     ///   be a valid index of the deque.
@@ -309,7 +309,7 @@ public struct Deque<Element>: RandomAccessCollection, MutableCollection {
     ///      var nums = Deque([10, 20, 30, 40, 50])
     ///      nums.replaceSubrange(1...3, with: repeatElement(1, count: 5))
     ///      print(nums)
-    ///      // Prints "[:| 10, 1, 1, 1, 1, 1, 50 |:]"
+    ///      // Prints "[10, 1, 1, 1, 1, 1, 50]"
     ///
     /// If you pass a zero-length range as the `subrange` parameter, this method
     /// inserts the elements of `newElements` at `subrange.startIndex`. Calling
@@ -378,124 +378,6 @@ public struct Deque<Element>: RandomAccessCollection, MutableCollection {
     /// If the deque is empty, `endIndex` is equal to `startIndex`.
     public var endIndex: Int {
         return _buffer.count
-    }
-    
-    /// Returns the position immediately after the given index.
-    ///
-    /// - Parameter i: A valid index of the collection. `i` must be less than
-    ///   `endIndex`.
-    /// - Returns: The index value immediately after `i`.
-    public func index(after i: Int) -> Int {
-        return i + 1
-    }
-    
-    /// Replaces the given index with its successor.
-    ///
-    /// - Parameter i: A valid index of the collection. `i` must be less than
-    ///   `endIndex`.
-    public func formIndex(after i: inout Int) {
-        i += 1
-    }
-    
-    /// Returns the position immediately before the given index.
-    ///
-    /// - Parameter i: A valid index of the collection. `i` must be greater than
-    ///   `startIndex`.
-    /// - Returns: The index value immediately before `i`.
-    public func index(before i: Int) -> Int {
-        return i - 1
-    }
-    
-    /// Replaces the given index with its predecessor.
-    ///
-    /// - Parameter i: A valid index of the collection. `i` must be greater than
-    ///   `startIndex`.
-    public func formIndex(before i: inout Int) {
-        i -= 1
-    }
-    
-    /// Returns an index that is the specified distance from the given index.
-    ///
-    /// The following example obtains an index advanced four positions from an
-    /// deque starting index and then prints the element at that position.
-    ///
-    ///     let numbers = [10, 20, 30, 40, 50]
-    ///     let i = numbers.index(numbers.startIndex, offsetBy: 4)
-    ///     print(numbers[i])
-    ///     // Prints "50"
-    ///
-    /// Advancing an index beyond a collection's ending index or offsetting it
-    /// before a collection's starting index may trigger a runtime error. The
-    /// value passed as `n` must not result in such an operation.
-    ///
-    /// - Parameters:
-    ///   - i: A valid index of the deque.
-    ///   - n: The distance to offset `i`.
-    /// - Returns: An index offset by `n` from the index `i`. If `n` is positive,
-    ///   this is the same value as the result of `n` calls to `index(after:)`.
-    ///   If `n` is negative, this is the same value as the result of `-n` calls
-    ///   to `index(before:)`.
-    ///
-    /// - Complexity: O(1)
-    public func index(_ i: Int, offsetBy n: Int) -> Int {
-        return i + n
-    }
-    
-    /// Returns an index that is the specified distance from the given index,
-    /// unless that distance is beyond a given limiting index.
-    ///
-    /// The following example obtains an index advanced four positions from an
-    /// deque's starting index and then prints the element at that position. The
-    /// operation doesn't require going beyond the limiting `numbers.endIndex`
-    /// value, so it succeeds.
-    ///
-    ///     let numbers = [10, 20, 30, 40, 50]
-    ///     let i = numbers.index(numbers.startIndex,
-    ///                           offsetBy: 4,
-    ///                           limitedBy: numbers.endIndex)
-    ///     print(numbers[i])
-    ///     // Prints "50"
-    ///
-    /// The next example attempts to retrieve an index ten positions from
-    /// `numbers.startIndex`, but fails, because that distance is beyond the
-    /// index passed as `limit`.
-    ///
-    ///     let j = numbers.index(numbers.startIndex,
-    ///                           offsetBy: 10,
-    ///                           limitedBy: numbers.endIndex)
-    ///     print(j)
-    ///     // Prints "nil"
-    ///
-    /// Advancing an index beyond a collection's ending index or offsetting it
-    /// before a collection's starting index may trigger a runtime error. The
-    /// value passed as `n` must not result in such an operation.
-    ///
-    /// - Parameters:
-    ///   - i: A valid index of the deque.
-    ///   - n: The distance to offset `i`.
-    ///   - limit: A valid index of the collection to use as a limit. If `n > 0`,
-    ///     `limit` has no effect if it is less than `i`. Likewise, if `n < 0`,
-    ///     `limit` has no effect if it is greater than `i`.
-    /// - Returns: An index offset by `n` from the index `i`, unless that index
-    ///   would be beyond `limit` in the direction of movement. In that case,
-    ///   the method returns `nil`.
-    ///
-    /// - SeeAlso: `index(_:offsetBy:)`, `formIndex(_:offsetBy:limitedBy:)`
-    /// - Complexity: O(1)
-    public func index(_ i: Int, offsetBy n: Int, limitedBy limit: Int) -> Int? {
-        let j = i + n
-        return j > limit ? nil : j
-    }
-    
-    /// Returns the distance between two indices.
-    ///
-    /// - Parameters:
-    ///   - start: A valid index of the collection.
-    ///   - end: Another valid index of the collection. If `end` is equal to
-    ///     `start`, the result is zero.
-    /// - Returns: The distance between `start` and `end`.
-    public func distance(from start: Int, to end: Int) -> Int {
-        return end - start
     }
     
     /// A type that can represent the indices that are valid for subscripting the
@@ -590,5 +472,38 @@ public struct Deque<Element>: RandomAccessCollection, MutableCollection {
                 replaceSubrange(bounds, with: newValue)
             }
         }
+    }
+}
+
+extension Deque: ExpressibleByArrayLiteral {
+    
+    /// Creates a deque from the given array literal.
+    ///
+    /// Do not call this initializer directly. It is used by the compiler
+    /// when you use an array literal. Instead, create a new deque by using an
+    /// array literal as its value. To do this, enclose a comma-separated list of
+    /// values in square brackets.
+    ///
+    /// Here, a deque of strings is created from an array literal holding
+    /// only strings.
+    ///
+    ///     let ingredients: Deque = ["cocoa beans", "sugar", "cocoa butter", "salt"]
+    ///
+    /// - Parameter elements: A variadic list of elements of the new array.
+    public init(arrayLiteral elements: Element...) {
+        self.init(elements)
+    }
+}
+
+extension Deque: CustomStringConvertible, CustomDebugStringConvertible {
+    /// A textual representation of the array and its elements.
+    public var description: String {
+        return "[" + map(String.init(describing:)).joined(separator: ", ") + "]"
+    }
+    
+    /// A textual representation of the array and its elements, suitable for
+    /// debugging.
+    public var debugDescription: String {
+        return "Deque(" + description + ")"
     }
 }
