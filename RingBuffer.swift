@@ -155,13 +155,13 @@ final class RingBuffer<Element> {
             return eptr[hptr.pointee.index(hptr.pointee.startIndex, offsetBy: index)]
         }
     }
-    
+
     func append(_ element: Element) {
         assert(count + 1 <= capacity)
         
         _Buffer(unsafeBufferObject: self).withUnsafeMutablePointers { hptr, eptr in
             hptr.pointee.count += 1
-            eptr.advanced(by: hptr.pointee.endIndex).initialize(to: element)
+            eptr.advanced(by: hptr.pointee.index(hptr.pointee.startIndex, offsetBy: hptr.pointee.count - 1)).initialize(to: element)
         }
     }
     
