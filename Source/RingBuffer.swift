@@ -71,7 +71,11 @@ fileprivate struct _RingBufferHeader {
         
         /// 1. If buffer is not splitted then just move tail
         guard isSplitted else {
-            return ((lowerIdx % capacity)..<(upperIdx % capacity), 0..<0)
+            if upperIdx % capacity == 0 {
+                return (0..<0, (lowerIdx % capacity)..<capacity)
+            } else {
+                return ((lowerIdx % capacity)..<(upperIdx % capacity), 0..<0)
+            }
         }
         
         /// 2. If buffer is splitted and the range is not
@@ -216,8 +220,8 @@ final class RingBuffer<Element> {
                 hptr.pointee.formIndex(after: &i)
                 newValues.formIndex(after: &j)
             }
-            for _ in subrange.upperBound..<count {
-                eptr.advanced(by: i).initialize(to: at(index: i))
+            for k in subrange.upperBound..<count {
+                eptr.advanced(by: i).initialize(to: at(index: k))
                 hptr.pointee.formIndex(after: &i)
             }
         }
@@ -412,7 +416,7 @@ final class RingBuffer<Element> {
                     /// tail is shorter than the hole. move as much as possible...
                     newTailStart.moveAssign(from: oldTailStart, count: tailCount)
                     /// ... and destroy the rest
-                    oldTailStart.advanced(by: tailCount).deinitialize(count: right.count - tailCount)
+                    newTailStart.advanced(by: tailCount).deinitialize(count: right.count - tailCount)
                 }
                 else {
                     /// the hole is the same size or shorter than tail. move elements to fill the hole...
@@ -455,6 +459,7 @@ final class RingBuffer<Element> {
             
             /// adjust offset
             hptr.pointee.offset = newOffset
+            hptr.pointee.count += growth
         }
     }
 }
