@@ -2,6 +2,7 @@
 Swift Double-ended queue implementation
 
 [![Build Status](https://travis-ci.org/Interfere/Deque.svg?branch=master)](https://travis-ci.org/Interfere/Deque)
+[![codecov](https://codecov.io/gh/Interfere/Deque/branch/master/graph/badge.svg)](https://codecov.io/gh/Interfere/Deque)
 ![Swift](https://img.shields.io/badge/%20in-swift%203.0-orange.svg)
 
 ## Description

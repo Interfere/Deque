@@ -3,5 +3,6 @@ osx_image: xcode8.2
 
 script:
     - xcodebuild -version -sdk
-    - xcodebuild clean test -project Deque.xcodeproj -scheme Deque -configuration Release ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=YES
+    - xcodebuild clean test -project Deque.xcodeproj -scheme Deque -configuration Release -enableCodeCoverage YES ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=YES
+    - bash <(curl -s https://codecov.io/bash) -cF osx
 
