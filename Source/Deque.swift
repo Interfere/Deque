@@ -405,6 +405,63 @@ public struct Deque<Element>: RandomAccessCollection, MutableCollection {
         return startIndex..<endIndex
     }
     
+    /// Returns the position immediately after the given index.
+    ///
+    /// - Parameter i: A valid index of the collection. `i` must be less than
+    ///   `endIndex`.
+    /// - Returns: The index value immediately after `i`.
+    public func index(after i: Int) -> Int {
+        return i + 1
+    }
+    
+    /// Returns the position immediately after the given index.
+    ///
+    /// - Parameter i: A valid index of the collection. `i` must be greater than
+    ///   `startIndex`.
+    /// - Returns: The index value immediately before `i`.
+    public func index(before i: Int) -> Int {
+        return i - 1
+    }
+    
+    /// Returns an index that is the specified distance from the given index.
+    ///
+    /// The following example obtains an index advanced four positions from an
+    /// array's starting index and then prints the element at that position.
+    ///
+    ///     let numbers: Deque = [10, 20, 30, 40, 50]
+    ///     let i = numbers.index(numbers.startIndex, offsetBy: 4)
+    ///     print(numbers[i])
+    ///     // Prints "50"
+    ///
+    /// The value passed as `n` must not offset `i` beyond the bounds of the
+    /// collection.
+    ///
+    /// - Parameters:
+    ///   - i: A valid index of the collection.
+    ///   - n: The distance to offset `i`.
+    /// - Returns: An index offset by `n` from the index `i`. If `n` is positive,
+    ///   this is the same value as the result of `n` calls to `index(after:)`.
+    ///   If `n` is negative, this is the same value as the result of `-n` calls
+    ///   to `index(before:)`.
+    ///
+    /// - Complexity: O(1)
+    public func index(_ i: Int, offsetBy n: Int) -> Int {
+        return i + n
+    }
+    
+    /// Returns the distance between two indices.
+    ///
+    /// - Parameters:
+    ///   - start: A valid index of the collection.
+    ///   - end: Another valid index of the collection. If `end` is equal to
+    ///     `start`, the result is zero.
+    /// - Returns: The distance between `start` and `end`.
+    ///
+    /// - Complexity: O(1)
+    public func distance(from start: Int, to end: Int) -> Int {
+        return end - start
+    }
+    
     /// Accesses the element at the specified position.
     ///
     /// The following example uses indexed subscripting to update an deque's
